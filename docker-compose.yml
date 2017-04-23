@@ -11,9 +11,12 @@ services:
     - 3000:3000
     depends_on:
     - db
+    - redis
   db:
     image: postgres
     volumes:
     - "./.volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data"
+  redis:
+    image: redis
 volumes:
   gemdir: 
