@@ -1,0 +1,48 @@
+#!/bin/bash
+
+COLOR="36;40m" # blue text on black background
+
+# start - Starts a container in daemon mode
+if [ $1 = "start" ]; then
+    echo -e "\033[${COLOR}Firing engines...\033[0m"
+    docker-compose up -d
+# stop - Stops all containers
+elif [ $1 = "stop" ]; then
+    echo -e "\033[${COLOR}Halting engines...\033[0m"
+    docker-compose stop
+# restart - Restarts all containers
+elif [ $1 = "restart" ]; then
+    echo -e "\033[${COLOR}Rebooting engines...\033[0m"
+    docker-compose stop && docker-compose up -d
+# status - Checks status of containers
+elif [ $1 = "status" ]; then
+    docker-compose ps
+# ssh - SSH into the web container
+elif [ $1 = "ssh" ]; then
+    echo -e "\033[${COLOR}Entering the vehicle...\033[0m"
+    docker-compose exec web bash -l
+# spec - Run all specs inside the container
+elif [ $1 = "spec" ]; then
+    echo -e "\033[${COLOR}System check...\033[0m"
+    docker-compose exec web bash -l -c "cd /app && bin/rspec spec"
+# bundle - Bundle install
+elif [ $1 = "bundle" ]; then
+    echo -e "\033[${COLOR}Getting dependencies...\033[0m"
+    docker-compose exec web bash -l -c "cd /app && bundle install"
+# server - start Rails server
+elif [ $1 = "server" || $1 = "s" ]; then
+    echo -e "\033[${COLOR}Activating core...\033[0m"
+    docker-compose exec web bash -l -c "cd /app && bundle exec rails server -b '0.0.0.0'"
+# console - open up Rails console
+elif [ $1 = "console" || $1 = "c" ]; then
+    echo -e "\033[${COLOR}Attaching...\033[0m"
+    docker-compose exec web bash -l -c "cd /app && bundle exec rails console"
+# rails - run rails commands inside the container
+elif [ $1 = "rails" ]; then
+    docker-compose exec web bash -l -c "cd /app && bundle exec rails ${@:2}"
+# rake - run rake commands inside the container
+elif [ $1 = "rake" ]; then
+    docker-compose exec web bash -l -c "cd /app && bundle exec rake ${@:2}"
+else
+    echo "Invalid command $1. Allowed commands: start, stop, status, ssh, spec, bundle, rails, rake, server/s, console/c"
+fi

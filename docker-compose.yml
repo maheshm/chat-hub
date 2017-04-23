@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - 'gemdir:/gemdir'
+    command: sh /app/bin/docker/dockup
+    ports:
+      - "3000:3000"
+
+volumes:
+  gemdir:
