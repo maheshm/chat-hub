@@ -10,5 +10,11 @@ After you have cloned this repo, run the following command to set up this app
 in docker containers with the necessary dependencies:
 
 ```shell
-% docker-compose up
+% bin/houston start
+```
+
+To start server:
+
+```shell
+% bin/houston s
 ```
