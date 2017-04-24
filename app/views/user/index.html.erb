@@ -1,0 +1,5 @@
+<% for user in @users %>
+  <li onClick="load_conversation_with(<%= user.id %>, this)" class="user-list list-group-item">
+    <%= user.email %> <h6> <%= user.role %> </h6>
+  </li>
+<% end %>

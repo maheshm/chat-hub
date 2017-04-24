@@ -30,11 +30,11 @@ elif [ $1 = "bundle" ]; then
     echo -e "\033[${COLOR}Getting dependencies...\033[0m"
     docker-compose exec web bash -l -c "cd /app && bundle install"
 # server - start Rails server
-elif [ $1 = "server" || $1 = "s" ]; then
+elif [ $1 = "server" ] || [ $1 = "s" ]; then
     echo -e "\033[${COLOR}Activating core...\033[0m"
     docker-compose exec web bash -l -c "cd /app && bundle exec rails server -b '0.0.0.0'"
 # console - open up Rails console
-elif [ $1 = "console" || $1 = "c" ]; then
+elif [ $1 = "console" ] || [ $1 = "c" ]; then
     echo -e "\033[${COLOR}Attaching...\033[0m"
     docker-compose exec web bash -l -c "cd /app && bundle exec rails console"
 # rails - run rails commands inside the container

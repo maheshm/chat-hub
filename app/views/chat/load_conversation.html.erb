@@ -1,0 +1,27 @@
+<div class="panel-heading">
+  <h3 class="panel-title">Conversation with <%= @user.email %></h3>
+</div>
+
+<ul class="list-group" style="height:500px; overflow: scroll;">
+  <% for message in @messages %>
+    <li class="list-group-item clearfix">
+      <% if message.sender == @user %>
+        <span>
+      <% else %>
+        <span class="pull-right">
+      <% end %>
+        <p><%= message.message %></p>
+        <span class="glyphicon glyphicon-time"></span>
+        <i class="text-muted"><%= time_ago_in_words(message.created_at.to_time) %></i>
+      </span>
+    </li>
+  <% end %>
+</ul>
+<div class="panel-body">
+  <div class="input-group">
+    <input type="text" class="form-control" id="message" placeholder="Send a message...">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" onClick="send_message(<%= @user.id %>)">Send!</button>
+    </span>
+  </div>
+</div>
